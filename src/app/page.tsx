@@ -1,7 +1,26 @@
 import Image from "next/image";
+import { LLMChain } from "langchain/chains";
+import { OpenAI } from "@langchain/openai";
+import { PromptTemplate } from "@langchain/core/prompts";
 
 export default function Home() {
+
+  const model = new OpenAI({ temperature: 0 });
+  const prompt = PromptTemplate.fromTemplate("what is a haiku?");
+  const chain = new LLMChain({ llm: model, prompt });
+  async function getResult() {
+    const test = await chain.call({})
+    console.log("hi")
+    console.log("Result from LLM:" + JSON.stringify(test));
+    return test["text"]
+  };
+
   return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <p>test</p>
+      <p>{getResult()}</p>
+    </main>
+    /*
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
@@ -109,5 +128,6 @@ export default function Home() {
         </a>
       </div>
     </main>
+    */
   );
 }
