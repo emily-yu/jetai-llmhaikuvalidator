@@ -2,6 +2,9 @@ import Image from "next/image";
 import { LLMChain } from "langchain/chains";
 import { OpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
+import { PrismaClient } from '@prisma/client'
+import type { User } from '@prisma/client'
+
 
 export default function Home() {
 
@@ -9,10 +12,19 @@ export default function Home() {
   const prompt = PromptTemplate.fromTemplate("what is a haiku?");
   const chain = new LLMChain({ llm: model, prompt });
   async function getResult() {
-    const test = await chain.call({})
-    console.log("hi")
-    console.log("Result from LLM:" + JSON.stringify(test));
-    return test["text"]
+    // const test = await chain.call({})
+    // console.log("hi")
+    // console.log("Result from LLM:" + JSON.stringify(test));
+
+    // Creating a new record
+    const prisma = new PrismaClient();
+      await prisma.user.create({
+        data: {
+        id: 2,
+        email: "alice@prisma.io"
+      }})
+      return "hehe"
+    // return test["text"]
   };
 
   return (
