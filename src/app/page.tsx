@@ -7,6 +7,8 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { PrismaClient } from '@prisma/client'
 import type { User } from '@prisma/client'
 import { useState } from 'react';
+import { ERROR_API } from './constants';
+
 
 export default function Home() {
   const [inputValue, setInputValue] = useState<string>('');
@@ -22,11 +24,9 @@ export default function Home() {
         const response = await fetch(`/api/llm?input=${encodeURIComponent(inputValue)}`);
         const data = await response.json();
         setResult(data.message);
-        setValidationMsg('No Error calling API'); 
       } catch (error) {
-        console.error('Error calling API:', error);
-        setResult('Error calling API');
-        setValidationMsg('Error calling API');
+        setResult(ERROR_API);
+        setValidationMsg(ERROR_API);
       }
     };
   return (
@@ -41,7 +41,7 @@ export default function Home() {
         id="message" 
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)} 
-        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment...">
+        className="common-textarea" placeholder="Write a haiku here...">
       </textarea>
 
       <p className="p-2 m-2 bg-gray-200 rounded-lg">
@@ -51,7 +51,7 @@ export default function Home() {
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={handleApiCall}
-      >Call API
+      >Check Validity
       </button>
     </main>
   );
