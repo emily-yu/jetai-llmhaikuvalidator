@@ -8,28 +8,6 @@ import { PrismaClient } from '@prisma/client'
 import type { User } from '@prisma/client'
 
 export default function Home() {
-  
-  
-  const model = new OpenAI({ temperature: 0 });
-    // todo: is the input a haiku?
-    // todo: create a random haiku
-    const prompt = PromptTemplate.fromTemplate("what is a haiku?");
-    const chain = new LLMChain({ llm: model, prompt });
-    const getResult = async () => {
-      const test = await chain.call({})
-      console.log("hi")
-      console.log("Result from LLM:" + JSON.stringify(test));
-  
-      // adding a row in db
-      const prisma = new PrismaClient();
-        prisma.user.create({
-          data: {
-            email: "alice3@prisma.io" + Math.random()
-        }})
-        // return "hehe"
-        // setStudents("hehe")
-      return test["text"]
-    };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
 
@@ -49,7 +27,7 @@ export default function Home() {
       
       <p>the result of the llm</p>
       {/* {getResult()} */}
-      <LLMComponent message={JSON.stringify(getResult())}></LLMComponent>
+      {/* <LLMComponent message={JSON.stringify(getResult())}></LLMComponent> */}
     </main>
   );
 }
