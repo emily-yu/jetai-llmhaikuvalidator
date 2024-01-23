@@ -5,34 +5,25 @@ import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { input } = req.query;
     const model = new OpenAI({ temperature: 0 });
     // todo: is the input a haiku?
     // todo: create a random haiku
-    const prompt = PromptTemplate.fromTemplate("what is a haiku?");
+    const prompt = PromptTemplate.fromTemplate(input as string);
     const chain = new LLMChain({ llm: model, prompt });
-    // const getResult = () => {
     const test = await chain.call({})
-    console.log("hi")
     console.log("Result from LLM:" + JSON.stringify(test));
 
     // adding a row in db
     const prisma = new PrismaClient();
     prisma.user.create({
-    data: {
-    email: "alice3@prisma.io" + Math.random()
-    }})
+        data: {
+        email: "alice3@prisma.io" + Math.random()
+        }})
     
     console.log(test["text"])
 
-    async function fetchData() {
-        // Simulating an asynchronous operation (e.g., fetching data from a database)
-        return new Promise(resolve => {
-          setTimeout(() => {
-            resolve('Some data');
-          }, 1000);
-        });
-      }
-  res.status(200).json({ message: test["text"]})
+    res.status(200).json({ message: test["text"]})
 
 }
 
