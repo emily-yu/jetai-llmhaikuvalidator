@@ -7,9 +7,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { input } = req.query;
     const model = new OpenAI({ temperature: 0 });
-    // todo: is the input a haiku?
-    // todo: create a random haiku
-    const prompt = PromptTemplate.fromTemplate(input as string);
+
+    // prompt 
+    const prompt = PromptTemplate.fromTemplate("is this a haiku? if not, please make me a haiku. if it is, please give me feedback on what you think of it. " + input as string);
+    
     const chain = new LLMChain({ llm: model, prompt });
     const test = await chain.call({})
     console.log("Result from LLM:" + JSON.stringify(test));
@@ -21,8 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         email: "alice3@prisma.io" + Math.random()
         }})
     
-    console.log(test["text"])
-
     res.status(200).json({ message: test["text"]})
 
 }
