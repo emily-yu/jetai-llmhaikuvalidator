@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const model = new OpenAI({ temperature: 0 });
 
     // prompt 
-    const prompt = PromptTemplate.fromTemplate("is this a haiku? if not, please make me a haiku. if it is, please give me feedback on what you think of it. " + input as string);
+    const prompt = PromptTemplate.fromTemplate("is this a properly formatted haiku? " + input as string + ". if it is not a haiku, please make me a haiku. if it is, please give me feedback on what you think of it.");
     
     const chain = new LLMChain({ llm: model, prompt });
     const test = await chain.call({})
@@ -17,13 +17,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // adding a row in db
     const prisma = new PrismaClient();
-    prisma.user.create({
+    const newUser = await prisma.user.create({
         data: {
-        email: "alice3@prisma.io" + Math.random()
-        }})
-    
+          llm_input: input as string,
+          llm_resp: test["text"]
+        }
+      });
+      
     res.status(200).json({ message: test["text"]})
-
 }
 
 // https://www.reddit.com/r/nextjs/comments/1595lsr/whats_the_correct_way_to_call_nextjs_api/
