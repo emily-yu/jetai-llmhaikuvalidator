@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jet AI Take-Home
 
-## Getting Started
+## Stack
+This project utilizes the following technologies: Next.js, TailwindCSS, Prisma ORM, SQLite, and LangChain.
 
-First, run the development server:
+## Structure
+The project follows the standard setup for Next.js with TailwindCSS. Key files and directories include:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- `pages/api/llm.tsx`
+- `constants.tsx`
+- `page.tsx`
+- `schema.prisma`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design Choices
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### File Structure: LLM Interactions
+I chose to convert the default server-side rendering into client-side rendering for `page.tsx`. The request logic for fetching a response from the LLM is placed on an API endpoint, as the component needs to be populated repetitively after the initial load.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For a more complex application, structural changes might involve splitting the Button into its own component if there is data to be fetched on loading the page. However, for the current scope, the main page data is fairly static. The projected usage is more backend/computationally intensive related to analytics, so this shouldn't pose a problem.
 
-## Learn More
+### Data Flow
+Due to the relatively small scope of the project with few states to manage, there is little use for Redux or extensive state management.
 
-To learn more about Next.js, take a look at the following resources:
+### ORM
+For analytics, implementing an ORM is better over raw SQL queries. The added benefits of data validation outweigh potential decreases in performance for this use case.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### CSS Framework
+TailwindCSS is used here for its pre-built utility classes, which provides a quick solution for UI. There is room, however, for improvement in class cleanliness.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Clone the repository.
+2. Install dependencies:
+    ```bash
+    cd jetai-llmhaikuvalidator
+    npm install
+    ```
+3. Set up environment variables:
+    - Create a `.env` file with your OpenAI API key:
+        ```
+        OPENAI_API_KEY=[apikey]
+        ```
+4. Database Setup:
+    - Load vars/schema from schema.prisma and env:
+        ```bash
+        npx prisma migrate dev --name init
+        npx prisma studio
