@@ -1,0 +1,111 @@
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+^[[A^C%                                                                   
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+┌─────────────────────────────────────────────────────────┐
+│  Update available 5.8.1 -> 5.9.1                        │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+^C%                                                                 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+^C%                                                                 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma migrate dev
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+
+
+Error: 
+⚠️ We found changes that cannot be executed:
+
+  • Step 0 Added the required column `score` to the `User` table without a default value. There are 12 rows in this table, it is not possible to execute this step.
+
+You can use prisma migrate dev --create-only to create the migration file, and manually modify it to address the underlying issue(s).
+Then run prisma migrate dev to apply it and verify it works.
+
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+
+
+⚠️ We found changes that cannot be executed:
+
+  • Added the required column `score` to the `User` table without a default value. There are 12 rows in this table, it is not possible to execute this step.
+
+
+✔ To apply this change we need to reset the database, do you want to continue? All data will be lost. … yes
+The SQLite database "dev.db" from "file:./dev.db" was successfully reset.
+
+🚀  Your database is now in sync with your Prisma schema. Done in 1.59s
+
+Running generate... (Use --skip-generate to skip the generators)
+✔ Generated Prisma Client (v5.8.1) to ./node_modules/@prisma/client 
+in 84ms
+
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma migrate dev
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+^C%                                                                 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+^C%                                                                 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+
+🚀  Your database is now in sync with your Prisma schema. Done in 10ms
+
+✔ Generated Prisma Client (v5.8.1) to ./node_modules/@prisma/client 
+in 53ms
+
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio 
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555
+^C%                                                                 
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+Error: P1012
+
+error: Error parsing attribute "@default": Expected a String value, but found `0`.
+  -->  schema.prisma:14
+   | 
+13 |   llm_resp String
+14 |   score String @default(0)
+   | 
+
+
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+
+🚀  Your database is now in sync with your Prisma schema. Done in 10ms
+
+✔ Generated Prisma Client (v5.8.1) to ./node_modules/@prisma/client 
+in 65ms
+
+emilyyu@Emilys-MacBook-Pro-2 tailwind-testing % npx prisma studio 
+Environment variables loaded from .env
+Prisma schema loaded from schema.prisma
+Prisma Studio is up on http://localhost:5555

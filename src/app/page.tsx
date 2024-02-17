@@ -13,6 +13,7 @@ import { ERROR_API } from './constants';
 export default function Home() {
   const [inputValue, setInputValue] = useState<string>('');
   const [result, setResult] = useState<string | null>(null);
+  const [score, setScore] = useState<string | null>(null);
   const [validationMsg, setValidationMsg] = useState<string | null>(null);
   const handleApiCall = async () => {
       try {
@@ -23,7 +24,10 @@ export default function Home() {
 
         const response = await fetch(`/api/llm?input=${encodeURIComponent(inputValue)}`);
         const data = await response.json();
+
+
         setResult(data.message);
+        setScore(data.score)
       } catch (error) {
         setResult(ERROR_API);
         setValidationMsg(ERROR_API);
@@ -44,9 +48,16 @@ export default function Home() {
         className="common-textarea" placeholder="Write a haiku here...">
       </textarea>
 
-      <p className="p-2 m-2 bg-gray-200 rounded-lg">
+      
+      <div className="flex flex-row items-center p-24">
+        <p className="p-2 m-2 bg-gray-200 rounded-lg">
         {result && <p>{result}</p>}
-      </p>
+        </p>
+
+        <p className="p-2 m-2 bg-gray-200 rounded-lg">
+        {score && <p>{score}</p>}
+        </p>
+      </div>
 
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
